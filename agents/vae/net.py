@@ -1,5 +1,5 @@
 from numpy import ndarray
-from rainy.net import ActorCriticNet, LinearHead
+from rainy.net import ActorCriticNet, LinearHead, DummyRnn
 from rainy.net.init import Initializer, orthogonal
 from rainy.net.policy import CategoricalHead, Policy
 from rainy.utils import Device
@@ -82,7 +82,12 @@ class VaeActorCriticNet(ActorCriticNet):
         self._state_dim = input_dim
         self.policy_head = CategoricalHead(action_dim=action_dim)
         self.to(device.unwrapped)
+        self._rnn = DummyRnn()
 
+    @property
+    def recurrent_body(self) -> DummyRnn:
+        return self._rnn
+        
     @property
     def action_dim(self) -> int:
         return self.actor.output_dim

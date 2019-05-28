@@ -1,5 +1,5 @@
 from rainy import Config
-from rogue_gym.envs import ImageSetting, StairRewardEnv, StairRewardParallel
+from rogue_gym.envs import ImageSetting, RogueEnv, StairRewardEnv, StairRewardParallel
 from rogue_gym.rainy_impls import ParallelRogueEnvExt, RogueEnvExt
 
 CONFIG = {
@@ -36,10 +36,13 @@ def set_env(config: Config, expand: ImageSetting) -> None:
         image_setting=expand,
     )))
     config.eval_env = RogueEnvExt(StairRewardEnv(
-        config_dict=CONFIG,
-        max_steps=500,
-        stair_reward=50.0,
-        image_setting=expand,
+        RogueEnv(
+            config_dict=CONFIG,
+            mex_steps=500,
+            stair_reward=50.0,
+            image_setting=expand
+        ),
+        100.0
     ))
     config.max_steps = int(2e7) * 2
     config.eval_freq = None

@@ -10,7 +10,7 @@ from .loss import GammaVaeLoss
 class VaePpoAgent(PpoAgent):
     def _one_step(self, states: Array[State]) -> Array[State]:
         with torch.no_grad():
-            policy, value = self.net.p_and_v(self.penv.states_to_array(states))
+            policy, value = self.net.p_and_v(self.penv.extract(states))
         next_states, rewards, done, info = self.penv.step(policy.action().squeeze().cpu().numpy())
         self.episode_length += 1
         self.rewards += rewards
@@ -23,7 +23,7 @@ class VaePpoAgent(PpoAgent):
             states = self._one_step(states)
 
         with torch.no_grad():
-            next_value = self.net.value(self.penv.states_to_array(states))
+            next_value = self.net.value(self.penv.extract(states))
 
         if self.config.use_gae:
             gamma, tau = self.config.discount_factor, self.config.gae_tau
@@ -57,7 +57,7 @@ class VaePpoAgent(PpoAgent):
 
         self.storage.reset()
         self.lr_cooler.lr_decay(self.optimizer)
-        self.clip_eps = self.clip_cooler(self.clip_eps)
+        self.clip_eps = self.clip_cooler()
         p, v, e, r, lt = map(lambda x: x / float(self.num_updates), (p, v, e, r, lt))
         self.report_loss(policy_loss=p, value_loss=v,
                          entropy_loss=e, recons_loss=r, latent_loss=lt)

@@ -23,7 +23,7 @@ def get_agent(logdir: str, nworkers: int = 10):
 def eval_seeds(logdir: str, l: int, r: int, n: int) -> None:
     ag = get_agent(logdir)
     logdir = Path(logdir)
-    ag.load(logdir.joinpath('rainy-agent.save').as_posix())
+    ag.load(logdir.joinpath('rainy-agent.pth').as_posix())
     rewards = []
     start = datetime.now()
     for i in range(l, r):

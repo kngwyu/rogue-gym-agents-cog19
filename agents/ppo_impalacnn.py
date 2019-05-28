@@ -2,7 +2,7 @@ import os
 from rainy import Config
 from rainy.agents import PpoAgent
 import rainy.utils.cli as cli
-import ppo_32_noenem_nohist_sym
+import ppo_naturecnn
 from net import impala_conv
 
 
@@ -10,7 +10,7 @@ AGENT = PpoAgent
 
 
 def config() -> Config:
-    c = ppo_32_noenem_nohist_sym.config()
+    c = ppo_naturecnn.config()
     c.set_net_fn('actor-critic', impala_conv())
     return c
 
