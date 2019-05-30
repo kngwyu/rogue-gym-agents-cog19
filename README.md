@@ -1,5 +1,6 @@
 # rogue-gym-agents-cog19
-Model-free RL Agent implementations for rogue-gym.
+This repository contains codes for exprimens in
+[COG2019 Rogue-Gym: A New Challenge for Generalization in Reinforcement Learning](https://arxiv.org/abs/1904.08129).
 
 # Setup
 1. Install pipenv
@@ -17,15 +18,25 @@ pipenv install
 ```
 
 # Usage
+All hyper paremters are at [env.py](agents/env.py) and you need to
+edit the file to change the experiment setting.
 
 ## Train agents
+- PPO with nature CNN
 ```
-python eval_seeds.py --logdir=$YOUR_LOD_DIR
+pipenv run python agents/ppo_naturecnn.py train
 ```
-
+- PPO with impala CNN
+```
+pipenv run python agents/ppo_impalacnn.py train
+```
+- PPO with β-VAE feature extractor(β is hard coded in the file)
+```
+pipenv run python agents/vae_ppo.py train
+```
 
 ## Evaluate agents
 ```
-python eval_seeds.py --logdir=$YOUR_LOD_DIR
+pipenv run python agents/eval_seeds.py --logdir=$YOUR_LOD_DIR
 ```
 
