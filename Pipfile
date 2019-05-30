@@ -8,12 +8,10 @@ click = '>=7.0'
 numpy = '>=1.15'
 rainy = '==0.1.0'
 torch = '>=1.0'
-rogue_gym = '==0.0.1'
+rogue_gym = '==0.0.2'
 
 [dev-packages]
 pytest = '>=3.0'
-
-
 
 
 
